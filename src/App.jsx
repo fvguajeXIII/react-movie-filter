@@ -49,58 +49,70 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <h1>React Movie Filter</h1>
-      <div className="filter-container">
-        <label htmlFor="genre-select">Filtra per genere:</label>
-        <select
-          id="genre-select"
-          value={selectedGenre}
-          onChange={e => setSelectedGenre(e.target.value)}
-        >
-          {genres.map(genre => (
-            <option key={genre} value={genre}>{genre}</option>
-          ))}
-        </select>
+    <div className="container py-4">
+      <h1 className="mb-4 text-center">React Movie Filter</h1>
+      <div className="row mb-3">
+        <div className="col-md-6 mb-2">
+          <label htmlFor="genre-select" className="form-label">Filtra per genere:</label>
+          <select
+            id="genre-select"
+            className="form-select"
+            value={selectedGenre}
+            onChange={e => setSelectedGenre(e.target.value)}
+          >
+            {genres.map(genre => (
+              <option key={genre} value={genre}>{genre}</option>
+            ))}
+          </select>
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="search-title" className="form-label">Cerca per titolo:</label>
+          <input
+            id="search-title"
+            type="text"
+            className="form-control"
+            value={searchTitle}
+            onChange={e => setSearchTitle(e.target.value)}
+            placeholder="Inserisci titolo..."
+          />
+        </div>
       </div>
-      <div className="search-container" style={{ marginBottom: '20px' }}>
-        <label htmlFor="search-title">Cerca per titolo:</label>
-        <input
-          id="search-title"
-          type="text"
-          value={searchTitle}
-          onChange={e => setSearchTitle(e.target.value)}
-          placeholder="Inserisci titolo..."
-          style={{ marginLeft: '8px', padding: '4px 8px', borderRadius: '4px', border: '1px solid #ccc' }}
-        />
-      </div>
-      <form className="add-movie-form" onSubmit={handleAddMovie} style={{ marginBottom: '24px' }}>
-        <h2>Aggiungi nuovo film</h2>
-        <input
-          type="text"
-          value={newTitle}
-          onChange={e => setNewTitle(e.target.value)}
-          placeholder="Titolo"
-          style={{ marginRight: '8px', padding: '4px 8px', borderRadius: '4px', border: '1px solid #ccc' }}
-        />
-        <input
-          type="text"
-          value={newGenre}
-          onChange={e => setNewGenre(e.target.value)}
-          placeholder="Genere"
-          style={{ marginRight: '8px', padding: '4px 8px', borderRadius: '4px', border: '1px solid #ccc' }}
-        />
-        <button type="submit" style={{ padding: '4px 12px', borderRadius: '4px', border: 'none', background: '#1976d2', color: '#fff' }}>
-          Aggiungi
-        </button>
+      <form className="card card-body mb-4" onSubmit={handleAddMovie}>
+        <h2 className="h5 mb-3">Aggiungi nuovo film</h2>
+        <div className="row g-2 align-items-center">
+          <div className="col-md-5">
+            <input
+              type="text"
+              className="form-control"
+              value={newTitle}
+              onChange={e => setNewTitle(e.target.value)}
+              placeholder="Titolo"
+            />
+          </div>
+          <div className="col-md-5">
+            <input
+              type="text"
+              className="form-control"
+              value={newGenre}
+              onChange={e => setNewGenre(e.target.value)}
+              placeholder="Genere"
+            />
+          </div>
+          <div className="col-md-2">
+            <button type="submit" className="btn btn-primary w-100">
+              Aggiungi
+            </button>
+          </div>
+        </div>
       </form>
-      <ul className="movie-list">
+      <ul className="list-group movie-list">
         {filteredMovies.length === 0 ? (
-          <li>Nessun film trovato.</li>
+          <li className="list-group-item">Nessun film trovato.</li>
         ) : (
           filteredMovies.map((movie, idx) => (
-            <li key={idx}>
-              <strong>{movie.title}</strong> <span>({movie.genre})</span>
+            <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
+              <strong>{movie.title}</strong>
+              <span className="badge bg-secondary">{movie.genre}</span>
             </li>
           ))
         )}
