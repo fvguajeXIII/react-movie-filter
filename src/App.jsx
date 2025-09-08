@@ -1,6 +1,6 @@
 
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const movies = [
   { title: 'Inception', genre: 'Fantascienza' },
@@ -15,10 +15,15 @@ const genres = ['Tutti', ...Array.from(new Set(movies.map(m => m.genre)))];
 
 function App() {
   const [selectedGenre, setSelectedGenre] = useState('Tutti');
+  const [filteredMovies, setFilteredMovies] = useState(movies);
 
-  const filteredMovies = selectedGenre === 'Tutti'
-    ? movies
-    : movies.filter(m => m.genre === selectedGenre);
+  useEffect(() => {
+    if (selectedGenre === 'Tutti') {
+      setFilteredMovies(movies);
+    } else {
+      setFilteredMovies(movies.filter(m => m.genre === selectedGenre));
+    }
+  }, [selectedGenre]);
 
   return (
     <div className="App">
